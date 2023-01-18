@@ -9,18 +9,20 @@ type author struct {
 
 func main() {
 	var authors = map[string]author{
-		"tm": {name: "Toni Morrison"},
 		"ma": {name: "Marcus Aurelius"},
+		"tm": {name: "Toni Morrison"},
 	}
 	fmt.Printf("%v\n", authors)
 
 	// change the value of an author in the map
+	authors["tm"] = author{name: "Toni MyMom"}
 
 	// print the map
-	// fmt.Printf("%v\n", authors)
+	fmt.Printf("%v\n", authors)
 
 	// delete a key from the map
+	delete(authors, "tm")
 
 	// print the map
-	// fmt.Printf("%v\n", authors)
+	fmt.Printf("%v\n", authors)
 }
