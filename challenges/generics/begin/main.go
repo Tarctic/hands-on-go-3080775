@@ -1,46 +1,51 @@
 // challenges/generics/begin/main.go
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"golang.org/x/exp/constraints"
+)
 
 // Part 1: print function refactoring
 
 // non-generic print functions
 
-func printString(s string) { fmt.Println(s) }
+// func printString(s string) { fmt.Println(s) }
 
-func printInt(i int) { fmt.Println(i) }
+// func printInt(i int) { fmt.Println(i) }
 
-func printBool(b bool) { fmt.Println(b) }
+// func printBool(b bool) { fmt.Println(b) }
+
+func printAny[T any](val T) {
+	fmt.Println(val)
+}
 
 // Part 2 sum function refactoring
 
+type numeric interface {constraints.Float | constraints.Integer}
+
 // sum sums a slice of any type
-func sum(numbers []interface{}) interface{} {
-	var result float64
+func sumAny[T numeric](numbers ...T) (T) {
+	var sum T
 	for _, n := range numbers {
-		switch n.(type) {
-		case int:
-			result += float64(n.(int))
-		case float32, float64:
-			result += n.(float64)
-		default:
-			continue
-		}
+		sum += n
 	}
-	return result
+	return sum
 }
 
 func main() {
 	// call non-generic print functions
-	printString("Hello")
-	printInt(42)
-	printBool(true)
+	// printString("Hello")
+	// printInt(42)
+	// printBool(true)
 
 	// call generic printAny function for each value above
+  printAny("Hello")
+  printAny(42)
+  printAny(true)
 
-	// call sum function
-	fmt.Println("result", sum([]interface{}{1, 2, 3}))
+	// call generics sum function
+	fmt.Println(sumAny(1,2,3))
 
-	// call generics sumAny function
 }
